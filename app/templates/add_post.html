@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block title %}Add Post{% endblock %}
+
+{% block app_content %}
+<h1>Add Post</h1>
+<div class="row">
+    <div class="col-md-4">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+{{ ckeditor.load() }}
+{{ ckeditor.config(name='post') }}
+<!--
+<form action="{{ url_for('add_post') }}"  method="post">
+    {{ form.csrf_token }}
+    <p>
+        {{ form.post.label }}<br>
+        {{ form.post(cols=50, rows=4) }}
+        {% for error in form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+-->
+{% endblock %}

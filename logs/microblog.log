@@ -1,0 +1,105 @@
+2019-02-14 12:57:32,361 INFO: Microblog startup [in C:\Users\kevin_59ku82\Documents\Flask\microblog\app\__init__.py:34]
+2019-02-14 12:58:00,691 ERROR: Exception on /edit_profile [POST] [in c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask\app.py:1761]
+Traceback (most recent call last):
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1236, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\default.py", line 536, in do_execute
+    cursor.execute(statement, parameters)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\cursors.py", line 170, in execute
+    result = self._query(query)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\cursors.py", line 328, in _query
+    conn.query(q)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 732, in _read_query_result
+    result.read()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1062, "Duplicate entry 'arthur' for key 'ix_user_username'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\flask_login\utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\kevin_59ku82\Documents\Flask\microblog\app\views.py", line 75, in edit_profile
+    db.session.commit()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\session.py", line 1023, in commit
+    self.transaction.commit()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\session.py", line 487, in commit
+    self._prepare_impl()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\session.py", line 466, in _prepare_impl
+    self.session.flush()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\session.py", line 2436, in flush
+    self._flush(objects)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\session.py", line 2574, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\util\langhelpers.py", line 67, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\util\compat.py", line 277, in reraise
+    raise value
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\session.py", line 2534, in _flush
+    flush_context.execute()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 416, in execute
+    rec.execute(self)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 583, in execute
+    uow,
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\persistence.py", line 236, in save_obj
+    update,
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\orm\persistence.py", line 976, in _emit_update_statements
+    statement, multiparams
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\base.py", line 980, in execute
+    return meth(self, multiparams, params)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\sql\elements.py", line 273, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1099, in _execute_clauseelement
+    distilled_params,
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1240, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1458, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\util\compat.py", line 296, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\util\compat.py", line 276, in reraise
+    raise value.with_traceback(tb)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1236, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\sqlalchemy\engine\default.py", line 536, in do_execute
+    cursor.execute(statement, parameters)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\cursors.py", line 170, in execute
+    result = self._query(query)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\cursors.py", line 328, in _query
+    conn.query(q)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 732, in _read_query_result
+    result.read()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "c:\users\kevin_59ku82\documents\flask\microblog\env\lib\site-packages\pymysql\err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+sqlalchemy.exc.IntegrityError: (pymysql.err.IntegrityError) (1062, "Duplicate entry 'arthur' for key 'ix_user_username'") [SQL: 'UPDATE user SET username=%(username)s, about_me=%(about_me)s WHERE user.id = %(user_id)s'] [parameters: {'username': 'arthur', 'about_me': 'A cool customer', 'user_id': 2}] (Background on this error at: http://sqlalche.me/e/gkpj)

@@ -1,0 +1,7 @@
+*.pyc
+*.db
+env
+secrets.txt
+.zip
+.sql
+.tar.gz
