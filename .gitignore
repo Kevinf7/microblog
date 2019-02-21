@@ -1,7 +1,9 @@
 *.pyc
 *.db
 env
-secrets.txt
+secret.bat
+secret.txt
 .zip
 .sql
 .tar.gz
+runenv.bat
