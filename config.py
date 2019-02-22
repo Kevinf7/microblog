@@ -15,4 +15,4 @@ class Config(object):
     #CKEditor settings
     CKEDITOR_HEIGHT=200
     CKEDITOR_WIDTH=800
-    CKEDITOR_PKG_TYPE='standard'
+    CKEDITOR_PKG_TYPE='basic'
