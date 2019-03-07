@@ -15,4 +15,8 @@ class Config(object):
     #CKEditor settings
     CKEDITOR_HEIGHT=200
     CKEDITOR_WIDTH=800
-    CKEDITOR_PKG_TYPE='basic'
+    CKEDITOR_PKG_TYPE='standard'
+    CKEDITOR_SERVE_LOCAL=True
+    CKEDITOR_FILE_UPLOADER='upload'
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    UPLOADED_PATH=os.path.join(basedir, 'uploads')

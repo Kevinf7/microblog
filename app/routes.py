@@ -1,14 +1,14 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, send_from_directory
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Role, Post
 from datetime import datetime
+from flask_ckeditor import upload_fail, upload_success
+import os
 
 @app.route('/')
 @app.route('/index')
-##user must be logged in to view this page.
-#@login_required
 def index():
     #get page number from url. If no page number use page 1
     page = request.args.get('page',1,type=int)
@@ -51,6 +51,7 @@ def login():
     return render_template('login.html',form=form)
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
@@ -106,6 +107,22 @@ def add_post():
         flash('Your post has been published!')
         return redirect(url_for('index'))
     return render_template('add_post.html',form=form)
+
+#Code below from https://github.com/greyli/flask-ckeditor/blob/master/examples/image-upload/app.py
+@app.route('/files/<filename>')
+def uploaded_files(filename):
+    path = app.config['UPLOADED_PATH']
+    return send_from_directory(path, filename)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    f = request.files.get('upload')
+    extension = f.filename.split('.')[1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Image only!')
+    f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+    url = url_for('uploaded_files', filename=f.filename)
+    return upload_success(url=url)
 
 #checks this before any function, updates last seen with current time
 @app.before_request

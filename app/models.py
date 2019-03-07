@@ -5,6 +5,7 @@ from hashlib import md5
 from flask_login import UserMixin, AnonymousUserMixin
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     about_me = db.Column(db.String(140))
@@ -36,19 +37,26 @@ class User(db.Model, UserMixin):
         return 'https://www.gravatar.com/avatar/{}?d=monsterid&s={}'.format(digest, size)
 
     def is_admin(self):
-        return self.role.name == 'Admin'
+        return self.role.name == 'admin'
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
 #This allows application to freely call these methods even if you're not logged in
 class AnonymousUser(AnonymousUserMixin):
+    def set_password(self, password):
+        return False
+    def check_password(self, password):
+        return False
+    def avatar(self, size):
+        return False
     def is_admin(self):
         return False
 #This tells flask login which class to use if user is not logged in
 login.anonymous_user = AnonymousUser
 
 class Role(db.Model):
+    __tablename__='role'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     #only one role is set to true this is to be used as the default role
@@ -57,6 +65,7 @@ class Role(db.Model):
     users = db.relationship('User',backref='role',lazy='dynamic')
 
 class Post(db.Model):
+    __tablename__='post'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(200))
     #Use utcnow to store time in database so it is universal
@@ -67,6 +76,7 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+#Used by flask-login
 #This callback is used to reload the user object from the user ID stored in the session
 @login.user_loader
 def load_user(user_id):

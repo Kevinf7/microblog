@@ -2,8 +2,7 @@
 {% block title %}Home{% endblock %}
 
 {% block app_content %}
-<h1>Welcome to my blog</h1>
-<!--is_anonymous is only true if user is not logged in-->
+<h1>Welcome to my microblog</h1>
 {% if current_user.is_authenticated %}
     <h2>Hi {{ current_user.username }}!</h2>
 {% endif %}
@@ -12,10 +11,15 @@
 {% endfor %}
 
 {% if prev_url %}
-<a href="{{ prev_url }}">Newer posts</a>
+<a href="{{ prev_url }}"><< Newer</a>
+{% else %}
+<< Newer
 {% endif %}
+ | 
 {% if next_url %}
-<a href="{{ next_url }}">Older posts</a>
+<a href="{{ next_url }}">Older >></a>
+{% else %}
+Older >>
 {% endif %}
 
 {% endblock %}
