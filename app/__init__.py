@@ -9,6 +9,7 @@ import os
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_ckeditor import CKEditor
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -21,6 +22,7 @@ migrate = Migrate(app,db)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 ckeditor = CKEditor(app)
+csrf = CSRFProtect(app) #enable CSRF protect upload for ckeditor
 
 #setup log files
 if not app.debug:

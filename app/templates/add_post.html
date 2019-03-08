@@ -9,8 +9,14 @@
         {{ wtf.quick_form(form) }}
     </div>
 </div>
-{{ ckeditor.load() }}
+{% if current_user.is_admin() %}
+    {{ ckeditor.load() }}
+{% else %}
+    {{ ckeditor.load(pkg_type="basic") }}
+{% endif %}
+
 {{ ckeditor.config(name='post') }}
+
 <!--
 <form action="{{ url_for('add_post') }}"  method="post">
     {{ form.csrf_token }}

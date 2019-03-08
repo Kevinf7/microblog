@@ -13,10 +13,12 @@ class Config(object):
     POSTS_PER_PAGE = 5
 
     #CKEditor settings
-    CKEDITOR_HEIGHT=200
+    CKEDITOR_HEIGHT=250
     CKEDITOR_WIDTH=800
     CKEDITOR_PKG_TYPE='standard'
     CKEDITOR_SERVE_LOCAL=True
     CKEDITOR_FILE_UPLOADER='upload'
     basedir = os.path.abspath(os.path.dirname(__file__))
     UPLOADED_PATH=os.path.join(basedir, 'uploads')
+    CKEDITOR_UPLOAD_ERROR_MESSAGE='Upload failed'
+    CKEDITOR_ENABLE_CSRF=True

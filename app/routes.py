@@ -19,11 +19,10 @@ def index():
         .paginate(page,app.config['POSTS_PER_PAGE'],False)
 
     #Python ternary operator
-    next_url = url_for('index', page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
-
-    return render_template('index.html',posts=posts.items, \
-        next_url=next_url, prev_url=prev_url)
+    #next_url = url_for('index', page=posts.next_num) if posts.has_next else None
+    #prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
+    #return render_template('index.html',posts=posts.items,next_url=next_url, prev_url=prev_url)
+    return render_template('index.html',posts=posts)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -108,7 +107,7 @@ def add_post():
         return redirect(url_for('index'))
     return render_template('add_post.html',form=form)
 
-#Code below from https://github.com/greyli/flask-ckeditor/blob/master/examples/image-upload/app.py
+#Code from flask-ckeditor documentation
 @app.route('/files/<filename>')
 def uploaded_files(filename):
     path = app.config['UPLOADED_PATH']
@@ -117,12 +116,13 @@ def uploaded_files(filename):
 @app.route('/upload', methods=['POST'])
 def upload():
     f = request.files.get('upload')
+    # Add more validations here
     extension = f.filename.split('.')[1].lower()
     if extension not in ['jpg', 'gif', 'png', 'jpeg']:
         return upload_fail(message='Image only!')
     f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
     url = url_for('uploaded_files', filename=f.filename)
-    return upload_success(url=url)
+    return upload_success(url=url)  # return upload_success call
 
 #checks this before any function, updates last seen with current time
 @app.before_request

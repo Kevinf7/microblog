@@ -17,7 +17,7 @@
             {% if current_user.is_anonymous %}
             <li class="nav-item"><a href="{{ url_for('login') }}">Login</a></li>
             {% else %}
-            {% if current_user.is_admin() %}
+            {% if current_user.is_authenticated %}
             <li class="nav-item"><a href="{{ url_for('add_post') }}">Add Content</a></li>
             {% endif %}
             <li class="nav-item"><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
