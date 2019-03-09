@@ -51,5 +51,5 @@ class EditProfileForm(FlaskForm):
 
 class PostForm(FlaskForm):
     #post = TextAreaField('Say something', validators=[InputRequired(), Length(min=1, max=200)])
-    post = CKEditorField('Say something')
+    post = CKEditorField('Write something', validators=[InputRequired(), Length(min=1, max=200)])
     submit = SubmitField('Submit')

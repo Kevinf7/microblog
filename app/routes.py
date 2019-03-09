@@ -15,13 +15,8 @@ def index():
     #return page number and how per page.
     #True means 404 error is returned if page is out of range. False means an empty list is returned
     #paginate returns a Pagination object
-    posts = Post.query.order_by(Post.timestamp.desc()) \
+    posts = Post.query.filter(Post.current==True).order_by(Post.timestamp.desc()) \
         .paginate(page,app.config['POSTS_PER_PAGE'],False)
-
-    #Python ternary operator
-    #next_url = url_for('index', page=posts.next_num) if posts.has_next else None
-    #prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
-    #return render_template('index.html',posts=posts.items,next_url=next_url, prev_url=prev_url)
     return render_template('index.html',posts=posts)
 
 @app.route('/login', methods=['GET','POST'])
@@ -95,7 +90,8 @@ def edit_profile():
     #wtforms will display the errors.
     return render_template('edit_profile.html',form=form)
 
-@app.route('/add_post',methods=['GET','POST'])
+#add a new post
+@app.route('/add_post/',methods=['GET','POST'])
 @login_required
 def add_post():
     form = PostForm()
@@ -106,6 +102,49 @@ def add_post():
         flash('Your post has been published!')
         return redirect(url_for('index'))
     return render_template('add_post.html',form=form)
+
+#edit an existing post which you posted
+@app.route('/edit_post/<id>',methods=['GET','POST'])
+@login_required
+def edit_post(id):
+    post = Post.getPost(id)
+    #id is wrong
+    if post is None:
+        flash('No such post exists.')
+        return redirect(url_for('index'))
+    #users's cannot edit other user's post
+    if post.author.id != current_user.id:
+        flash("You are not authorised to edit someone else's post")
+        return redirect(url_for('index'))
+    form = PostForm()
+    if form.validate_on_submit():
+        post.body = form.post.data
+        post.update_date = datetime.utcnow()
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been published!')
+        return redirect(url_for('index'))
+    return render_template('edit_post.html',form=form,post=post)
+
+#delete post - only admin user can do this
+@app.route('/del_post/<id>',methods=['GET'])
+@login_required
+def del_post(id):
+    post = Post.getPost(id)
+    #id is wrong
+    if post is None:
+        flash('No such post exists.')
+        return redirect(url_for('index'))
+    #users's cannot edit other user's post
+    if not current_user.is_admin():
+        flash("You do not have permission to perform this function")
+        return redirect(url_for('index'))
+    #we want to do a soft delete only
+    post.current=False
+    db.session.add(post)
+    db.session.commit()
+    flash('The post has been deleted')
+    return redirect(url_for('index'))
 
 #Code from flask-ckeditor documentation
 @app.route('/files/<filename>')

@@ -52,6 +52,8 @@ class AnonymousUser(AnonymousUserMixin):
         return False
     def is_admin(self):
         return False
+    def getPost(id):
+        return False
 #This tells flask login which class to use if user is not logged in
 login.anonymous_user = AnonymousUser
 
@@ -71,7 +73,12 @@ class Post(db.Model):
     #Use utcnow to store time in database so it is universal
     #we pass in the function 'utcnow' NOT the results of the function 'utcnow()'
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    update_date = db.Column(db.DateTime, nullable=True)
+    current = db.Column(db.Boolean, default=True, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def getPost(id):
+        return Post.query.filter(Post.id==id).first()
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
