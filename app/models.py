@@ -52,8 +52,6 @@ class AnonymousUser(AnonymousUserMixin):
         return False
     def is_admin(self):
         return False
-    def getPost(id):
-        return False
 #This tells flask login which class to use if user is not logged in
 login.anonymous_user = AnonymousUser
 

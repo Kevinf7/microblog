@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash, request, send_from_directory
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, DeleteForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Role, Post
 from datetime import datetime
@@ -108,6 +108,7 @@ def add_post():
 @login_required
 def edit_post(id):
     post = Post.getPost(id)
+
     #id is wrong
     if post is None:
         flash('No such post exists.')
@@ -116,6 +117,7 @@ def edit_post(id):
     if post.author.id != current_user.id:
         flash("You are not authorised to edit someone else's post")
         return redirect(url_for('index'))
+
     form = PostForm()
     if form.validate_on_submit():
         post.body = form.post.data
@@ -126,25 +128,31 @@ def edit_post(id):
         return redirect(url_for('index'))
     return render_template('edit_post.html',form=form,post=post)
 
-#delete post - only admin user can do this
-@app.route('/del_post/<id>',methods=['GET'])
+#delete an existing post - only admin can perform
+@app.route('/del_post/<id>',methods=['GET','POST'])
 @login_required
 def del_post(id):
     post = Post.getPost(id)
+
     #id is wrong
     if post is None:
         flash('No such post exists.')
         return redirect(url_for('index'))
-    #users's cannot edit other user's post
+    #only admin can delete post
     if not current_user.is_admin():
         flash("You do not have permission to perform this function")
         return redirect(url_for('index'))
-    #we want to do a soft delete only
-    post.current=False
-    db.session.add(post)
-    db.session.commit()
-    flash('The post has been deleted')
-    return redirect(url_for('index'))
+
+    #user confirms he wants to delete
+    if request.method == 'POST':
+        #we want to do a soft delete only
+        post.current=False
+        db.session.add(post)
+        db.session.commit()
+        flash('The post has been deleted')
+        return redirect(url_for('index'))
+    form = DeleteForm()
+    return render_template('del_post.html',form=form,post=post)
 
 #Code from flask-ckeditor documentation
 @app.route('/files/<filename>')

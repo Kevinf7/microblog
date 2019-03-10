@@ -10,6 +10,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_ckeditor import CKEditor
 from flask_wtf.csrf import CSRFProtect
+from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -23,6 +24,7 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 ckeditor = CKEditor(app)
 csrf = CSRFProtect(app) #enable CSRF protect upload for ckeditor
+mail = Mail(app)
 
 #setup log files
 if not app.debug:

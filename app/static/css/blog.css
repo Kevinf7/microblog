@@ -1,0 +1,17 @@
+#blog-pill {
+    text-decoration:none;
+    color:#333333;
+    font-size:12px;
+    font-weight:bold;
+    padding:0 15px;
+    line-height:32px;
+    height: auto;
+    display:inline-block;
+    text-align:center;
+    background-color:#DDDDDD;
+    border-radius: 8px;
+}
+
+#blog-pill:hover {
+    background-color: #f1f1f1;
+}

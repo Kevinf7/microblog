@@ -22,3 +22,12 @@ class Config(object):
     UPLOADED_PATH=os.path.join(basedir, 'uploads')
     CKEDITOR_UPLOAD_ERROR_MESSAGE='Upload failed'
     CKEDITOR_ENABLE_CSRF=True
+
+    #flask-mail settings
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    #list of admin email address that will recieve emails
+    ADMINS = ['kevin_foong@yahoo.com']

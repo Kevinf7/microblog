@@ -12,11 +12,12 @@
             said {{ moment(post.timestamp).fromNow() }}
             <br>
             {{ post.body|safe }}
+
             {% if current_user.is_authenticated and current_user == post.author %}
-                <span><a href="{{ url_for('edit_post',id=post.id) }}" class="badge badge-info">edit</a></span>
+                <a href="{{ url_for('edit_post',id=post.id) }}" class="badge badge-info" />edit</a>
             {% endif %}
             {% if current_user.is_admin() %}
-                <span><a href="{{ url_for('del_post',id=post.id) }}" class="badge badge-info">delete</a></span>
+                <a href="{{ url_for('del_post',id=post.id) }}"  class="badge badge-info" />delete</a>
             {% endif %}
         </td>
     </tr>

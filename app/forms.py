@@ -53,3 +53,6 @@ class PostForm(FlaskForm):
     #post = TextAreaField('Say something', validators=[InputRequired(), Length(min=1, max=200)])
     post = CKEditorField('Write something', validators=[InputRequired(), Length(min=1, max=200)])
     submit = SubmitField('Submit')
+
+class DeleteForm(FlaskForm):
+    submit = SubmitField('Submit')
