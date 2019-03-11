@@ -14,10 +14,14 @@
     </tr><tr>
         <td><strong>Created: </strong></td><td>{{ moment(post.timestamp).format('Do MMM YYYY h:mm:ss a') }}</td>
     </tr><tr>
-        <td colspan="2">{{ post.body | safe }}</td>
+        <td colspan="2">
+            <p><strong>Content:</strong></p>
+            <p>{{ post.body | safe }}</p>
+        </td>
     </tr></table>
     <hr />
     {{ form.submit() }}
+    {% include '_cancel_button.html' %}
     <p></p>
 </form>
 

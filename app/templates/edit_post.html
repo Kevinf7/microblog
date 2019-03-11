@@ -21,7 +21,9 @@
     {% endfor %}
     {% set f = form.post.process_data(post.body) %}
     <p>{{ form.post() }}</p>
-    <p>{{ form.submit() }}</p>
+    <p>{{ form.submit() }}
+    {% include '_cancel_button.html' %}
+    </p>
 </form>
 
 {% if current_user.is_admin() %}

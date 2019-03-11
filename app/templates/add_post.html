@@ -20,7 +20,9 @@
         <div style="color:red">[ {{ error }} ]</div>
     {% endfor %}
     <p>{{ form.post() }}</p>
-    <p>{{ form.submit() }}</p>
+    <p>{{ form.submit() }}
+    {% include '_cancel_button.html' %}
+    </p>
 </form>
 
 {% if current_user.is_admin() %}
