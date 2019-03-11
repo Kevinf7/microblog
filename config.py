@@ -14,7 +14,7 @@ class Config(object):
 
     #CKEditor settings
     CKEDITOR_HEIGHT=250
-    CKEDITOR_WIDTH=800
+    CKEDITOR_WIDTH='100%'
     CKEDITOR_PKG_TYPE='standard'
     CKEDITOR_SERVE_LOCAL=True
     CKEDITOR_FILE_UPLOADER='upload'
