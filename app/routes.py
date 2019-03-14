@@ -1,11 +1,12 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash, request, send_from_directory
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, DeleteForm
+from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Role, Post
 from datetime import datetime
 from flask_ckeditor import upload_fail, upload_success
 import os
+from app.email import send_password_reset_email
 
 @app.route('/')
 @app.route('/index')
@@ -153,6 +154,39 @@ def del_post(id):
         return redirect(url_for('index'))
     form = DeleteForm()
     return render_template('del_post.html',form=form,post=post)
+
+#User to enter email address to send forgot password link to
+@app.route('/forgot_password',methods=['GET','POST'])
+def forgot_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+            flash('Check your email for instructions to reset your password')
+        else:
+            flash('Email does not exist in our database')
+            return redirect(url_for('forgot_password'))
+    return render_template('forgot_password.html',form=form)
+
+#Allow users to create new password
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        flash('Token has expired or is no longer valid')
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
 
 #Code from flask-ckeditor documentation
 @app.route('/files/<filename>')

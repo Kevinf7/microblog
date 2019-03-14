@@ -50,9 +50,18 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('That username is already taken. Please enter another username')
 
 class PostForm(FlaskForm):
-    #post = TextAreaField('Say something', validators=[InputRequired(), Length(min=1, max=200)])
     post = CKEditorField('Write something', validators=[InputRequired(), Length(min=1, max=200)])
     submit = SubmitField('Submit')
 
 class DeleteForm(FlaskForm):
+    submit = SubmitField('Submit')
+
+class ForgotPasswordForm(FlaskForm):
+    email = StringField('Email', validators=[InputRequired(), Email()])
+    submit = SubmitField('Submit')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[InputRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[InputRequired(), EqualTo('password')])
     submit = SubmitField('Submit')
