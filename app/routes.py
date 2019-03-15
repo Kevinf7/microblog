@@ -7,6 +7,7 @@ from datetime import datetime
 from flask_ckeditor import upload_fail, upload_success
 import os
 from app.email import send_password_reset_email
+from werkzeug.urls import url_parse
 
 @app.route('/')
 @app.route('/index')
@@ -34,7 +35,8 @@ def login():
         #username/password is valid. sets current_user to the user
         login_user(user, remember=form.remember_me.data)
 
-        #where was the user trying to get to? after user logs in redirect him back to the page he was going
+        #Parameter is added by flask-login.
+        #It tells you where user was trying to go to.
         next_page = request.args.get('next')
 
         #in case url is absolute we will ignore, we only want a relative url
@@ -42,7 +44,6 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-
     return render_template('login.html',form=form)
 
 @app.route('/logout')
